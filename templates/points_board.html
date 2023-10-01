@@ -14,8 +14,8 @@
             <th>Remaining Points</th>
         {% for club in clubs_points %}
         <tr>
-            <td>club</td>
-            <td>club.points</td>
+            <td>{{ club }}</td>
+        <td>{{ clubs_points[club] }}</td>
         </tr>
         {% endfor %}
         </tr>
