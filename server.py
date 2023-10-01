@@ -55,8 +55,8 @@ def purchasePlaces():
 
 @app.route('/pointsDisplay',methods=['GET'])
 def pointsDisplay():
-    club_points = {club['name']: club['points'] for club in clubs}
-    render_template('points_board.html', club_points)
+    clubs_points = {club['name']: club['points'] for club in clubs}
+    render_template('points_board.html', clubs_points)
 
 @app.route('/logout')
 def logout():
