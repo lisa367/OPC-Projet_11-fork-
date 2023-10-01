@@ -8,5 +8,17 @@
 <body>
     <h1>Welcome to the GUDLFT Registration Portal!</h1>
     <a href="{{ url_for('index') }}">Back to login page</a>
+    <table>
+        <tr>
+            <th>Club</th>
+            <th>Remaining Points</th>
+        {% for club in clubs_points %}
+        <tr>
+            <td>club</td>
+            <td>club.points</td>
+        </tr>
+        {% endfor %}
+        </tr>
+    </table>
 </body>
 </html>
