@@ -6,8 +6,10 @@
     <title>GUDLFT Club Points Board</title>
 </head>
 <body>
-    <h1>Welcome to the GUDLFT Registration Portal!</h1>
+    <h1>Clubs Points</h1>
     <a href="{{ url_for('index') }}">Back to login page</a>
+    <br>
+    <br>
     <table>
         <tr>
             <th>Club</th>
@@ -15,7 +17,7 @@
         {% for club in clubs_points %}
         <tr>
             <td>{{ club }}</td>
-        <td>{{ clubs_points[club] }}</td>
+            <td>{{ clubs_points[club] }}</td>
         </tr>
         {% endfor %}
         </tr>
