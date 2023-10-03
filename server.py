@@ -59,7 +59,7 @@ def purchasePlaces():
     else:
         if int(club['points'] )> 0:
 
-            if placesRequired >= int(club['points']):
+            if placesRequired > int(club['points']):
                 flash("You do not have enough points for this purchase")
                 
             else:
