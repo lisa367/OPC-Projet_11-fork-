@@ -37,6 +37,16 @@ def showSummary():
         return ("Mail not found")
     
 
+@app.template_filter("competitionDateFilter")
+def competitionDateFilter(date_value):
+    current_date = dt.now()
+    competition_date = dt.strptime(date_value, "%Y-%m-%d %H:%M:%S")
+    return current_date < competition_date
+
+
+# app.jinja_env.filters["competitionDateFilter"] = competitionDateFilter
+
+
 @app.route('/book/<competition>/<club>')
 def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
