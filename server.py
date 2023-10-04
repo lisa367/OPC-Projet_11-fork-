@@ -18,13 +18,13 @@ def loadCompetitions():
 def saveClubs(clubs_modified):
     clubs_data = {"clubs": clubs_modified}
     with open('clubs.json', 'w') as file:
-        json.dump(clubs_data, file)
+        json.dump(clubs_data, file, indent=4)
 
 
 def saveCometitions(competitions_modified):
     competitions_data = {"competitions": competitions_modified}
     with open('competitions.json', 'w') as file:
-        json.dump(competitions_data, file)
+        json.dump(competitions_data, file, indent=4)
 
 
 app = Flask(__name__)
