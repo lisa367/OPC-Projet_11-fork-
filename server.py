@@ -14,6 +14,17 @@ def loadCompetitions():
          listOfCompetitions = json.load(comps)['competitions']
          return listOfCompetitions
 
+
+def saveClubs(clubs_data):
+     with open('clubs.json') as file:
+         json.dump(clubs_data, file)
+
+
+def saveCometitions(competitions_data):
+    with open('competitions.json') as file:
+        json.dump(competitions_data, file)
+
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
@@ -77,10 +88,12 @@ def purchasePlaces():
                 if placesRequired > int(competition['numberOfPlaces']):
                     flash("You cannot buy more places than available")
                 else:
-                    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
-                    club['points'] = int(club['points']) - placesRequired
+                    competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
+                    club['points'] = str(int(club['points']) - placesRequired)
                     flash('Great-booking complete!')
-                    # flash("You cannot buy more places than available")
+                    
+                    saveClubs(clubs)
+                    saveCometitions(competitions)
 
         else:
             flash("You do not have enough points for this purchase")
