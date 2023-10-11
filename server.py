@@ -27,6 +27,11 @@ def saveCometitions(competitions_modified):
         json.dump(competitions_data, file, indent=4)
 
 
+
+def create_app():
+    pass
+
+
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
