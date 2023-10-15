@@ -1,6 +1,6 @@
 import pytest
 from ..server import create_app, competitionDateFilter, book, purchasePlaces
-from conftest import *
+from conftest import client, clubs_data, competitions_data
 
 
 clubs = clubs_data()
