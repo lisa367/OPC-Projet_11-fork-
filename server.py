@@ -34,11 +34,13 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 
-def create_app(config):
+def create_app(test_config):
     app = Flask(__name__)
-    app.secret_key = 'something_special'
-    app.config.from_object("config")
-    app.config["TESTING"] = config.get("TESTING")
+    app.config["SECRET_KEY"] = "something special"
+    # app.secret_key = 'something_special'
+    # app.config.from_mapping(SECRET_KEY="something_special")
+    # app.config.from_object("test_config")
+    app.config["TESTING"] = test_config.get("TESTING")
 
     @app.route('/')
     def index():
