@@ -1,10 +1,11 @@
 import pytest
 from ..server import create_app, competitionDateFilter, book, purchasePlaces
-from conftest import client, clubs_data, competitions_data
+from conftest import client, loadClubs, loadCompetitions, saveClubs, saveCompetitions
 
 
-clubs = clubs_data()
-competitions = competitions_data()
+clubs = loadClubs()
+competitions = loadCompetitions()
+
 
 # Bug 1
 def test_showSummary(client):
@@ -26,8 +27,10 @@ def test_competitionDateFilter():
     assert competitionDateFilter("2000-01-01") == False
     assert competitionDateFilter("2050-01-01") == True
 
+
 def test_book():
     pass
+
 
 def test_max_purchasePlaces(client):
     competitions = {}
@@ -37,11 +40,11 @@ def test_max_purchasePlaces(client):
     Args:
         client (_type_): _description_
     """
-    response = client.post("/purchasePlaces", data={"club": "She Lifts", "competition": 'Spring Festival'})
+    response = client.post(
+        "/purchasePlaces", data={"club": "She Lifts", "competition": "Spring Festival"}
+    )
 
 
 # test du bug 4 pour tester l'affichage du template
 def test_valid_competion():
     pass
-
-
