@@ -34,7 +34,7 @@ competitions = loadCompetitions()
 clubs = loadClubs()
 
 
-def create_app(test_config):
+def create_app(test_config, clubs, competitions):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "something special"
     # app.secret_key = 'something_special'
@@ -131,7 +131,7 @@ def create_app(test_config):
     return app
 
 
-app = create_app({"TESTING": False})
+app = create_app({"TESTING": False}, clubs=clubs, competitions=competitions)
 
 
 if __name__ == "__main__":
