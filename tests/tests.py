@@ -21,13 +21,14 @@ def test_buy_more_places_than_points(client):
     """Test for bug #2
     Checks that the club has enough points to make a purchase
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
-    assert b"You do not have enough points for this purchase" in response.data
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Simply Lift"], "places": 13})
+    assert b"You cannot purchase more than 12 places per competition" in response.data
 
 
+# Bug 3
 def test_buy_more_than_12_places(client):
-    """Test for bug #2
-    Checks that the club has enough points to make a purchase
+    """Test for bug #3
+    Checks that the club cannot buy more than 12 places by competition
     """
     response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
     assert b"You do not have enough points for this purchase" in response.data
