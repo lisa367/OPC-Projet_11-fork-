@@ -3,17 +3,15 @@ import pytest_flask
 from server import create_app
 
 
-@pytest.fixture()
 def loadClubs():
     clubs = [
-        {"name": "Simply Lift", "email": "john@simplylift.com", "points": "13"},
+        {"name": "Simply Lift", "email": "john@simplylift.com", "points": "15"},
         {"name": "Iron Temple", "email": "admin@irontemple.com", "points": "4"},
         {"name": "She Lifts", "email": "kate@shelifts.co.uk", "points": "8"},
     ]
     return clubs
 
 
-@pytest.fixture()
 def loadCompetitions():
     competitions = [
         {
@@ -21,7 +19,11 @@ def loadCompetitions():
             "date": "2020-03-27 10:00:00",
             "numberOfPlaces": "24",
         },
-        {"name": "Fall Classic", "date": "2023-10-22 13:30:00", "numberOfPlaces": "11"},
+        {
+            "name": "Fall Classic",
+            "date": "2023-10-22 13:30:00",
+            "numberOfPlaces": "11"
+        },
         {
             "name": "Winter Competition",
             "date": "2024-10-22 13:30:00",
@@ -52,7 +54,7 @@ def saveCompetitions():
 
 
 @pytest.fixture
-def client(loadClubs, loadCompetitions):
+def client():
     clubs = loadClubs()
     competitions = loadCompetitions()
     app = create_app({"TESTING": True}, clubs=clubs, competitions=competitions)
