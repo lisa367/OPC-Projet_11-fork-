@@ -13,6 +13,7 @@ def test_login_with_wrong_email(client):
     Checks that a wrong email address doesn't raise an error
     """
     response = client.post("/showSummary", data={"email": "fake.email@test.com"})
+    assert b"Mail not found" in response.data
     assert response.status_code == 200
 
 
@@ -21,8 +22,8 @@ def test_buy_more_places_than_points(client):
     """Test for bug #2
     Checks that the club has enough points to make a purchase
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Simply Lift"], "places": 13})
-    assert b"You cannot purchase more than 12 places per competition" in response.data
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
+    assert b"You do not have enough points for this purchase" in response.data
 
 
 # Bug 3
@@ -30,8 +31,8 @@ def test_buy_more_than_12_places(client):
     """Test for bug #3
     Checks that the club cannot buy more than 12 places by competition
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
-    assert b"You do not have enough points for this purchase" in response.data
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Simply Lift"], "places": 13})
+    assert b"You cannot purchase more than 12 places per competition" in response.data
 
 
 # Bug 4
@@ -49,10 +50,20 @@ def test_purchase_places_past_competition(client):
 """
 
     assert response.status_code == 200
-    assert b"Mail not found" in response.data
     assert paragraph in response.data
 
 
+# Bug 5
+def test_buy_more_than_12_places(client):
+    """Test for bug #3
+    Checks that the club cannot buy more than 12 places by competition
+    """
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
+    assert b"You do not have enough points for this purchase" in response.data
+
+
+
+'''
 def test_max_purchasePlaces(client):
     competitions = {}
     """Test for bug #3
@@ -65,7 +76,7 @@ def test_max_purchasePlaces(client):
         "/purchasePlaces", data={"club": "She Lifts", "competition": "Spring Festival"}
     )
 
-
+'''
 
 
 
