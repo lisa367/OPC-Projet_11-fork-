@@ -8,32 +8,37 @@ competitions = loadCompetitions()
 
 
 # Bug 1
-def test_showSummary_wrong_email(client):
+def test_login_with_wrong_email(client):
     """Test for bug #1
     Checks that a wrong email address doesn't raise an error
-
-    Args:
-        client (_type_): _description_
     """
     response = client.post("/showSummary", data={"email": "fake.email@test.com"})
-
-    # assert response.data != IndexError
     assert response.status_code == 200
+
+
+# Bug 2
+def test_buy_more_places_than_points(client):
+    """Test for bug #2
+    Checks that the club has enough points to make a purchase
+    """
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
+    assert b"You do not have enough points for this purchase" in response.data
+
+
+def test_buy_more_than_12_places(client):
+    """Test for bug #2
+    Checks that the club has enough points to make a purchase
+    """
+    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
+    assert b"You do not have enough points for this purchase" in response.data
 
 
 # Bug 4
-def test_showSummary_past_competition(client):
-    """Test for bug #1
+def test_purchase_places_past_competition(client):
+    """Test for bug #4
     Checks that a there is no link to book a place in a past competition
-
-    Args:
-        client (_type_): _description_
     """
     response = client.post("/showSummary", data={"email": "fake.email@test.com"})
-
-    # assert response.data != IndexError
-    assert response.status_code == 200
-    assert b"Mail not found" in response.data
     paragraph = b"""
         <li>
             Spring Festival<br />
@@ -41,19 +46,10 @@ def test_showSummary_past_competition(client):
             Number of Places: 24  
         </li>
 """
+
+    assert response.status_code == 200
+    assert b"Mail not found" in response.data
     assert paragraph in response.data
-
-
-# Bug 2
-def test_competitionDateFilter(client):
-    """ assert competitionDateFilter("2000-01-01") == False
-    assert competitionDateFilter("2050-01-01") == True """
-    response = client.get()
-    assert 1 == 1
-
-
-""" def test_book():
-    pass """
 
 
 def test_max_purchasePlaces(client):
@@ -69,7 +65,34 @@ def test_max_purchasePlaces(client):
     )
 
 
+
+
+
+""" def test_competitionDateFilter(client):
+    assert competitionDateFilter("2000-01-01") == False
+    assert competitionDateFilter("2050-01-01") == True
+    response = client.get()
+    assert 1 == 1
+
+
+def test_book():
+    pass """
+
+
+
 # test du bug 4 pour tester l'affichage du template
 """ def test_valid_competion():
     pass
  """
+
+'''
+def test_login_with_wrong_email(client):
+    """Test for bug #1
+    Checks that a wrong email address doesn't raise an error
+
+    Args:
+        client (_type_): _description_
+    """
+    response = client.post("/showSummary", data={"email": "fake.email@test.com"})
+    assert response.status_code == 200
+'''
