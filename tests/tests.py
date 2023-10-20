@@ -65,6 +65,8 @@ def test_points_deduction(client):
     assert points_after_transaction == points_before_transaction - places_purchased
 
 
+def purchase_places(client):
+    pass
 
 '''
 def test_max_purchasePlaces(client):
