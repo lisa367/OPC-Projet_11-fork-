@@ -54,12 +54,15 @@ def test_purchase_places_past_competition(client):
 
 
 # Bug 5
-def test_buy_more_than_12_places(client):
-    """Test for bug #3
-    Checks that the club cannot buy more than 12 places by competition
+def test_points_deduction(client):
+    """Test for bug #5
+    Checks that the points used to purchase places are deducted from the total in the database
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
-    assert b"You do not have enough points for this purchase" in response.data
+    points_before_transaction = int(clubs[2]["points"])
+    response = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
+    points_after_transaction = int(clubs[2]["points"])
+    places_purchased = response.form["places"]
+    assert points_after_transaction == points_before_transaction - places_purchased
 
 
 
