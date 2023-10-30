@@ -30,11 +30,8 @@ def saveCometitions(competitions_modified):
 """ app = Flask(__name__)
 app.secret_key = 'something_special' """
 
-competitions = loadCompetitions()
-clubs = loadClubs()
 
-
-def create_app(test_config, clubs, competitions):
+def create_app(test_config, clubs_list, competitions_list):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "something special"
     # app.secret_key = 'something_special'
@@ -50,8 +47,8 @@ def create_app(test_config, clubs, competitions):
     def showSummary():
         #club = [club for club in clubs if club['email'] == request.form['email']][0]
         try:
-            club = [club for club in clubs if club['email'] == request.form['email']][0]
-            return render_template('welcome.html',club=club,competitions=competitions)
+            club = [club for club in clubs_list if club['email'] == request.form['email']][0]
+            return render_template('welcome.html', club=club, competitions=competitions_list)
 
         except IndexError:
             print("IndexError")
@@ -71,19 +68,19 @@ def create_app(test_config, clubs, competitions):
 
     @app.route('/book/<competition>/<club>')
     def book(competition,club):
-        foundClub = [c for c in clubs if c['name'] == club][0]
-        foundCompetition = [c for c in competitions if c['name'] == competition][0]
+        foundClub = [c for c in clubs_list if c['name'] == club][0]
+        foundCompetition = [c for c in competitions_list if c['name'] == competition][0]
         if foundClub and foundCompetition:
             return render_template('booking.html',club=foundClub,competition=foundCompetition)
         else:
             flash("Something went wrong-please try again")
-            return render_template('welcome.html', club=club, competitions=competitions)
+            return render_template('welcome.html', club=club, competitions=competitions_list)
 
 
     @app.route('/purchasePlaces',methods=['POST'])
     def purchasePlaces():
-        competition = [c for c in competitions if c['name'] == request.form['competition']][0]
-        club = [c for c in clubs if c['name'] == request.form['club']][0]
+        competition = [c for c in competitions_list if c['name'] == request.form['competition']][0]
+        club = [c for c in clubs_list if c['name'] == request.form['club']][0]
         placesRequired = int(request.form['places'])
 
         if placesRequired > 12:
@@ -106,21 +103,21 @@ def create_app(test_config, clubs, competitions):
                         """ print(clubs)
                         print(competitions) """
                         
-                        saveClubs(clubs)
-                        saveCometitions(competitions)
+                        saveClubs(clubs_list)
+                        saveCometitions(competitions_list)
 
             else:
                 flash("You do not have enough points for this purchase")
 
 
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions_list)
 
 
     # TODO: Add route for points display
 
     @app.route('/pointsDisplay',methods=['GET'])
     def pointsDisplay():
-        return render_template('points_board.html', clubs_points=clubs)
+        return render_template('points_board.html', clubs_points=clubs_list)
 
 
     @app.route('/logout')
@@ -131,7 +128,12 @@ def create_app(test_config, clubs, competitions):
     return app
 
 
-app = create_app({"TESTING": False}, clubs=clubs, competitions=competitions)
+
+competitions = loadCompetitions()
+clubs = loadClubs()
+
+
+app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competitions)
 
 
 if __name__ == "__main__":

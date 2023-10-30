@@ -1,5 +1,4 @@
 import pytest
-import pytest_flask
 from server import create_app
 
 
