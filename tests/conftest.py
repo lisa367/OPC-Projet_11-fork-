@@ -43,16 +43,18 @@ def getCompetitions():
     return competitions
 
 
+@pytest.fixture
 def saveClubs():
     pass
 
 
+@pytest.fixture
 def saveCompetitions():
     pass
 
 
 @pytest.fixture
-def client():
+def client(saveClubs, saveCompetitions):
     clubs_data = getClubs()
     competitions_data = getCompetitions()
     app = create_app({"TESTING": True}, clubs_list=clubs_data, competitions_list=competitions_data)
