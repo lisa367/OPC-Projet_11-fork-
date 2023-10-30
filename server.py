@@ -70,11 +70,14 @@ def create_app(test_config, clubs_list, competitions_list):
     def book(competition,club):
         foundClub = [c for c in clubs_list if c['name'] == club][0]
         foundCompetition = [c for c in competitions_list if c['name'] == competition][0]
-        if foundClub and foundCompetition:
-            return render_template('booking.html',club=foundClub,competition=foundCompetition)
+        if competitionDateFilter(foundClub['date']) :
+            if foundClub and foundCompetition:
+                return render_template('booking.html',club=foundClub,competition=foundCompetition)
+            else:
+                flash("Something went wrong-please try again")
+                return render_template('welcome.html', club=club, competitions=competitions_list)
         else:
-            flash("Something went wrong-please try again")
-            return render_template('welcome.html', club=club, competitions=competitions_list)
+            return ("You cannot book places from a past competition")
 
 
     @app.route('/purchasePlaces',methods=['POST'])
@@ -127,8 +130,7 @@ def create_app(test_config, clubs_list, competitions_list):
 
     return app
 
-
-
+""" 
 competitions = loadCompetitions()
 clubs = loadClubs()
 
@@ -137,4 +139,4 @@ app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competi
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) """
