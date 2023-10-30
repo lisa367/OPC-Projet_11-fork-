@@ -1,10 +1,10 @@
 import pytest
 # from server import competitionDateFilter
-from .conftest import client, loadClubs, loadCompetitions, saveClubs, saveCompetitions
+from .conftest import client, getClubs, getCompetitions, saveClubs, saveCompetitions
 
 
-clubs = loadClubs()
-competitions = loadCompetitions()
+clubs = getClubs()
+competitions = getCompetitions()
 
 
 # Bug 1
