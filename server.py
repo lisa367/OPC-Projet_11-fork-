@@ -70,7 +70,7 @@ def create_app(test_config, clubs_list, competitions_list):
     def book(competition,club):
         foundClub = [c for c in clubs_list if c['name'] == club][0]
         foundCompetition = [c for c in competitions_list if c['name'] == competition][0]
-        if competitionDateFilter(foundClub['date']) :
+        if competitionDateFilter(foundCompetition['date']) :
             if foundClub and foundCompetition:
                 return render_template('booking.html',club=foundClub,competition=foundCompetition)
             else:
@@ -130,7 +130,7 @@ def create_app(test_config, clubs_list, competitions_list):
 
     return app
 
-""" 
+
 competitions = loadCompetitions()
 clubs = loadClubs()
 
@@ -139,4 +139,4 @@ app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competi
 
 
 if __name__ == "__main__":
-    app.run(debug=True) """
+    app.run(debug=True)
