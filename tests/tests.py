@@ -63,12 +63,10 @@ def test_points_deduction(client):
     points_before_transaction = int(clubs[2]["points"])
     response = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
     points_after_transaction = int(clubs[2]["points"])
-    places_purchased = response.form["places"]
+    places_purchased = response.data[2]
     assert points_after_transaction == points_before_transaction - places_purchased
 
 
-def purchase_places(client):
-    pass
 
 '''
 def test_max_purchasePlaces(client):
