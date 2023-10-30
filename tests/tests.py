@@ -40,17 +40,11 @@ def test_purchase_places_past_competition(client):
     """Test for bug #4
     Checks that a there is no link to book a place in a past competition
     """
-    response = client.post("/showSummary", data={"email": "fake.email@test.com"})
-    paragraph = b"""
-        <li>
-            Spring Festival<br />
-            Date: 2020-03-27 10:00:00</br>
-            Number of Places: 24  
-        </li>
-"""
+    response = client.post("/book", data={"competition": ["Spring Festival"], "club": ["Simply Lift"]})
+    print(response.data)
 
     assert response.status_code == 200
-    assert paragraph in response.data
+    assert b"You cannot book places from a past competition" in response.data
 
 
 # Bug 5
