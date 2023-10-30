@@ -7,6 +7,9 @@ clubs = getClubs()
 competitions = getCompetitions()
 
 def test_index_page(client):
+    """
+    Tests access to the website
+    """
     response = client.get("/")
     assert response.status_code == 200
 
