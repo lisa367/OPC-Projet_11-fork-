@@ -6,6 +6,10 @@ from .conftest import client, getClubs, getCompetitions, saveClubs, saveCompetit
 clubs = getClubs()
 competitions = getCompetitions()
 
+def test_index_page(client):
+    response = client.get("/")
+    assert response.status_code == 200
+
 
 # Bug 1
 def test_login_with_wrong_email(client):
