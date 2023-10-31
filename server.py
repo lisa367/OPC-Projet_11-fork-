@@ -131,12 +131,11 @@ def create_app(test_config, clubs_list, competitions_list):
     return app
 
 
-competitions = loadCompetitions()
-clubs = loadClubs()
-
-
-app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competitions)
 
 
 if __name__ == "__main__":
+    competitions = loadCompetitions()
+    clubs = loadClubs()
+
+    app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competitions)
     app.run(debug=True)
