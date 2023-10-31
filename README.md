@@ -49,3 +49,29 @@
     We also like to show how well we're testing, so there's a module called 
     [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
 
+
+6.Create and activate virtual environment
+
+    Create the virtual env : 
+`python3 -m venv .env`
+
+    Make sure to activate the virtual environment : 
+`source .env/bin/activate`
+
+    Install the dependencies : 
+`pip install -r requirements.txt`
+
+7.Running the app
+
+
+    Change directory to Python_Testing if you are not already in it.
+    You can use the following command:
+`cd Python_testing`
+
+    Launch the app server with the command :
+`python server.py`
+
+
+8.Running the tests
+    Move to the tests/ directory : `cd tests/`
+    Run the command : `pytests tests.py`
