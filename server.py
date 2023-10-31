@@ -31,7 +31,7 @@ def saveCometitions(competitions_modified):
 app.secret_key = 'something_special' """
 
 
-def create_app(test_config, clubs_list, competitions_list):
+def create_app(test_config, clubs_list, competitions_list, save_clubs_func, save_comps_func):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "something special"
     # app.secret_key = 'something_special'
@@ -106,8 +106,10 @@ def create_app(test_config, clubs_list, competitions_list):
                         """ print(clubs)
                         print(competitions) """
                         
-                        saveClubs(clubs_list)
-                        saveCometitions(competitions_list)
+                        """ saveClubs(clubs_list)
+                        saveCometitions(competitions_list) """
+                        save_clubs_func(clubs_list)
+                        save_comps_func(competitions_list)
 
             else:
                 flash("You do not have enough points for this purchase")
@@ -137,5 +139,5 @@ if __name__ == "__main__":
     competitions = loadCompetitions()
     clubs = loadClubs()
 
-    app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competitions)
+    app = create_app({"TESTING": False}, clubs_list=clubs, competitions_list=competitions, save_clubs_func=saveClubs, save_comps_func=saveCometitions)
     app.run(debug=True)
