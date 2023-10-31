@@ -1,4 +1,5 @@
 import pytest
+from pytest import fixture
 from server import create_app
 
 
@@ -42,21 +43,34 @@ def getCompetitions():
 
     return competitions
 
+def saveClubs(clubs):
+    return 1
 
-@pytest.fixture
-def saveClubs():
-    pass
-
-
-@pytest.fixture
-def saveCompetitions():
-    pass
+def saveCompetitions(competitions):
+    return 1
 
 
-@pytest.fixture
-def client(saveClubs, saveCompetitions):
-    clubs_data = getClubs()
-    competitions_data = getCompetitions()
-    app = create_app({"TESTING": True}, clubs_list=clubs_data, competitions_list=competitions_data)
+clubs_data = getClubs()
+competitions_data = getCompetitions()
+
+@pytest.fixture()
+def app():
+    """saveClubs = saveClubs()
+    saveCompetitions = saveCompetitions() """
+    app = create_app(test_config={"TESTING": True}, clubs_list=clubs_data, competitions_list=competitions_data, save_clubs_func=saveClubs, save_comps_func=saveCompetitions)
+    print(app.config["TESTING"])
+    # other setup can go here
+    return app
+
+@pytest.fixture()
+def client(app):
     with app.test_client() as client:
         yield client
+
+""" @pytest.fixture()
+def client():
+    clubs_data = getClubs()
+    competitions_data = getCompetitions()
+    app = create_app(test_config={"TESTING": True}, clubs_list=clubs_data, competitions_list=competitions_data)
+    with app.test_client() as client:
+        yield client """
