@@ -1,2 +1,4 @@
 [run]
-omit = tests/tests.py
+omit = 
+    tests/tests.py
+    locustfile.py
