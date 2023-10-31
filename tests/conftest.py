@@ -1,5 +1,4 @@
 import pytest
-from pytest import fixture
 from server import create_app
 
 

@@ -1,10 +1,10 @@
 import pytest
 # from server import competitionDateFilter
-from .conftest import client, getClubs, getCompetitions, saveClubs, saveCompetitions
+from .conftest import client, getClubs, getCompetitions
 
 
-clubs = getClubs()
-competitions = getCompetitions()
+""" clubs = getClubs()
+competitions = getCompetitions() """
 
 def test_index_page(client):
     """
@@ -60,15 +60,31 @@ def test_points_deduction(client):
     """Test for bug #5
     Checks that the points used to purchase places are deducted from the total in the database
     """
-    points_before_transaction = int(clubs[2]["points"])
-    response = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
-    points_after_transaction = int(clubs[2]["points"])
-    places_purchased = response.data[2]
-    assert points_after_transaction == points_before_transaction - places_purchased
+    response_1 = client.post("/showSummary", data={"email": "kate@shelifts.co.uk"})
+    response_2 = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
+
+
+    assert b"Points available: 8" in response_1.data
+    assert b"Points available: 6" in response_2.data
 
 
 
 '''
+clubs = getClubs()
+competitions = getCompetitions()
+
+# Bug 5
+def test_points_deduction(client):
+    """Test for bug #5
+    Checks that the points used to purchase places are deducted from the total in the database
+    """
+    points_before_transaction = int(clubs[2]["points"])
+    response = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
+    points_after_transaction = int(clubs[2]["points"]) 
+    places_purchased = response.data[2]
+    assert points_after_transaction == points_before_transaction - places_purchased
+
+
 def test_max_purchasePlaces(client):
     competitions = {}
     """Test for bug #3
