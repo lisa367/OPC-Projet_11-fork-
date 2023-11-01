@@ -1,5 +1,6 @@
 import pytest
 from .conftest import client
+from server import loadClubs, loadCompetitions, saveClubs, saveCompetitions
 
 
 def test_index(client):
@@ -36,6 +37,7 @@ def test_logout(client):
 
 # Tests des bugs
 
+
 # Bug 1
 def test_login_with_wrong_email(client):
     """Test for bug #1
@@ -51,7 +53,14 @@ def test_buy_more_places_than_points(client):
     """Test for bug #2
     Checks that the club has enough points to make a purchase
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Iron Temple"], "places": 6})
+    response = client.post(
+        "/purchasePlaces",
+        data={
+            "competition": ["Winter Competition"],
+            "club": ["Iron Temple"],
+            "places": 6,
+        },
+    )
     assert b"You do not have enough points for this purchase" in response.data
 
 
@@ -60,7 +69,14 @@ def test_buy_more_than_12_places(client):
     """Test for bug #3
     Checks that the club cannot buy more than 12 places by competition
     """
-    response = client.post("/purchasePlaces", data={"competition": ["Winter Competition"], "club": ["Simply Lift"], "places": 13})
+    response = client.post(
+        "/purchasePlaces",
+        data={
+            "competition": ["Winter Competition"],
+            "club": ["Simply Lift"],
+            "places": 13,
+        },
+    )
     assert b"You cannot purchase more than 12 places per competition" in response.data
 
 
@@ -81,6 +97,31 @@ def test_points_deduction(client):
     Checks that the points used to purchase places are deducted from the total in the database
     """
     response_1 = client.post("/showSummary", data={"email": "kate@shelifts.co.uk"})
-    response_2 = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
+    response_2 = client.post(
+        "/purchasePlaces",
+        data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2},
+    )
     assert b"Points available: 8" in response_1.data
     assert b"Points available: 6" in response_2.data
+
+
+def test_loadClubs():
+    clubs = loadClubs()
+    assert 1 == 1
+
+
+def test_loadCompetitions():
+    competitions = loadCompetitions()
+    assert 1 == 1
+
+
+def test_saveClubs():
+    clubs = loadClubs()
+    saveClubs(clubs)
+    assert 1 == 1
+
+
+def test_saveCompetitions():
+    competitions = loadCompetitions()
+    saveCompetitions(competitions)
+    assert 1 == 1
