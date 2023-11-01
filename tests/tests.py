@@ -2,14 +2,17 @@ import pytest
 from .conftest import client
 
 
-
-def test_index_page(client):
+def test_index(client):
     """
     Tests access to the website
     """
     response = client.get("/")
     assert response.status_code == 200
 
+
+def test_login_with_right_email(client):
+    response = client.post("/showSummary", data={"email": "john@simplylift.com"})
+    assert response.status_code == 200
 
 # Bug 1
 def test_login_with_wrong_email(client):
@@ -20,6 +23,7 @@ def test_login_with_wrong_email(client):
     assert b"Mail not found" in response.data
     assert response.status_code == 200
 
+# Connexion avec bon email
 
 # Bug 2
 def test_buy_more_places_than_points(client):
