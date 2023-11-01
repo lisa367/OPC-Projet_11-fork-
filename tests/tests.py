@@ -8,11 +8,21 @@ def test_index(client):
     """
     response = client.get("/")
     assert response.status_code == 200
+    assert b"Welcome to the GUDLFT Registration Portal!" in response.data
+
+
+def test_logout(client):
+    response = client.get("/logout")
+    assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
 
 def test_login_with_right_email(client):
     response = client.post("/showSummary", data={"email": "john@simplylift.com"})
     assert response.status_code == 200
+    assert b"" in response.data
+
+
+# Tests des bugs
 
 # Bug 1
 def test_login_with_wrong_email(client):
@@ -50,8 +60,6 @@ def test_purchase_places_past_competition(client):
     """
     # response = client.post("/book", data={"competition": "Summer Classic", "club": "Simply Lift"})
     response = client.get("/book/Spring Festival/Simply Lift")
-    # print(response.data)
-
     assert response.status_code == 200
     assert b"You cannot book places from a past competition" in response.data
 
@@ -63,7 +71,5 @@ def test_points_deduction(client):
     """
     response_1 = client.post("/showSummary", data={"email": "kate@shelifts.co.uk"})
     response_2 = client.post("/purchasePlaces", data={"competition": ["Summer Classic"], "club": ["She Lifts"], "places": 2})
-
-
     assert b"Points available: 8" in response_1.data
     assert b"Points available: 6" in response_2.data
