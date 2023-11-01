@@ -11,15 +11,16 @@ def test_index(client):
     assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
 
-def test_logout(client):
-    response = client.get("/logout")
-    assert b"Welcome to the GUDLFT Registration Portal!" in response.data
-
-
 def test_login_with_right_email(client):
     response = client.post("/showSummary", data={"email": "john@simplylift.com"})
     assert response.status_code == 200
-    assert b"" in response.data
+    assert b"Welcome, john@simplylift.com" in response.data
+
+
+
+def test_logout(client):
+    response = client.get("/logout")
+    assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
 
 # Tests des bugs
@@ -33,7 +34,6 @@ def test_login_with_wrong_email(client):
     assert b"Mail not found" in response.data
     assert response.status_code == 200
 
-# Connexion avec bon email
 
 # Bug 2
 def test_buy_more_places_than_points(client):
