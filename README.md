@@ -75,3 +75,22 @@
 8.Running the tests
     Move to the tests/ directory : `cd tests/`
     Run the command : `pytests tests.py`
+
+9. Overall architecture
+<pre>OPC-Projet_11-fork/
+        | .env/
+        | Python_Testing/
+            | static/
+            | templates/  
+            | tests/
+                | __init__.py
+                | conftest.py
+                | tests.py
+
+            | server.py
+            | clubs.json
+            | competitions.json
+            | .gitignore
+            | README.md
+            |requirements.txt
+</pre>

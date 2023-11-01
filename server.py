@@ -34,9 +34,6 @@ app.secret_key = 'something_special' """
 def create_app(test_config, clubs_list, competitions_list, save_clubs_func, save_comps_func):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "something special"
-    # app.secret_key = 'something_special'
-    # app.config.from_mapping(SECRET_KEY="something_special")
-    # app.config.from_object("test_config")
     app.config["TESTING"] = test_config.get("TESTING")
 
     @app.route('/')
@@ -62,9 +59,7 @@ def create_app(test_config, clubs_list, competitions_list, save_clubs_func, save
         competition_date = dt.strptime(date_value, "%Y-%m-%d %H:%M:%S")
         return current_date < competition_date
 
-
     # app.jinja_env.filters["competitionDateFilter"] = competitionDateFilter
-
 
     @app.route('/book/<competition>/<club>')
     def book(competition,club):

@@ -66,10 +66,3 @@ def client(app):
     with app.test_client() as client:
         yield client
 
-""" @pytest.fixture()
-def client():
-    clubs_data = getClubs()
-    competitions_data = getCompetitions()
-    app = create_app(test_config={"TESTING": True}, clubs_list=clubs_data, competitions_list=competitions_data)
-    with app.test_client() as client:
-        yield client """
