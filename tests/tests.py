@@ -23,6 +23,11 @@ def purchase_places_in_future_competition(client):
     assert b"Places available: 18" in response.data
 
 
+def test_points_display(client):
+    response = client.get("/pointsDisplay")
+    assert b"Clubs Points" in response.data
+
+
 def test_logout(client):
     response = client.get("/logout")
     assert response.status_code == 302
