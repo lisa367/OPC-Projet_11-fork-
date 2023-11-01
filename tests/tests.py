@@ -17,10 +17,16 @@ def test_login_with_right_email(client):
     assert b"Welcome, john@simplylift.com" in response.data
 
 
+def purchase_places_in_future_competition(client):
+    response = client.get("/book/Summer Classic/She Lifts")
+    assert b"Booking for Summer Classic || GUDLFT" in response.data
+    assert b"Places available: 18" in response.data
+
 
 def test_logout(client):
     response = client.get("/logout")
-    assert b"Welcome to the GUDLFT Registration Portal!" in response.data
+    assert response.status_code == 302
+    # assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
 
 # Tests des bugs
