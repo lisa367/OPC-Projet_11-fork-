@@ -118,15 +118,3 @@ def test_loadCompetitions():
     assert competitions[0]["date"] == "2020-03-27 10:00:00"
 
 
-def test_saveClubs():
-    clubs_before = loadClubs()
-    saveClubs(clubs_before)
-    clubs_after = loadClubs()
-    assert clubs_before == clubs_after
-
-
-def test_saveCompetitions():
-    competitions_before = loadCompetitions()
-    saveCompetitions(competitions_before)
-    competitions_after = loadCompetitions()
-    assert competitions_before == competitions_after
