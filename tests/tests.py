@@ -4,9 +4,6 @@ from server import loadClubs, loadCompetitions, saveClubs, saveCompetitions
 
 
 def test_index(client):
-    """
-    Tests access to the website
-    """
     response = client.get("/")
     assert response.status_code == 200
     assert b"Welcome to the GUDLFT Registration Portal!" in response.data
@@ -105,23 +102,30 @@ def test_points_deduction(client):
     assert b"Points available: 6" in response_2.data
 
 
+
+# Test des fonctions pour les fichiers JSON
+
 def test_loadClubs():
     clubs = loadClubs()
-    assert 1 == 1
+    assert clubs[2]["name"] == "She Lifts"
+    assert clubs[2]["email"] == "kate@shelifts.co.uk"
 
 
 def test_loadCompetitions():
     competitions = loadCompetitions()
-    assert 1 == 1
+    assert competitions[0]["name"] == "Spring Festival"
+    assert competitions[0]["date"] == "2020-03-27 10:00:00"
 
 
 def test_saveClubs():
-    clubs = loadClubs()
-    saveClubs(clubs)
-    assert 1 == 1
+    clubs_before = loadClubs()
+    saveClubs(clubs_before)
+    clubs_after = loadClubs()
+    assert clubs_before == clubs_after
 
 
 def test_saveCompetitions():
-    competitions = loadCompetitions()
-    saveCompetitions(competitions)
-    assert 1 == 1
+    competitions_before = loadCompetitions()
+    saveCompetitions(competitions_before)
+    competitions_after = loadCompetitions()
+    assert competitions_before == competitions_after
