@@ -1,4 +1,6 @@
 [run]
+source = .
+
 omit = 
     tests/tests.py
     tests/conftest.py
