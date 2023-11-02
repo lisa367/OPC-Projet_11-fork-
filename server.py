@@ -72,20 +72,22 @@ def create_app(
 
     @app.route("/book/<competition>/<club>")
     def book(competition, club):
-        foundClub = [c for c in clubs_list if c["name"] == club][0]
-        foundCompetition = [c for c in competitions_list if c["name"] == competition][0]
-        if competitionDateFilter(foundCompetition["date"]):
-            if foundClub and foundCompetition:
+        foundClub = [c for c in clubs_list if c["name"] == club]
+        foundCompetition = [c for c in competitions_list if c["name"] == competition]
+        if foundClub and foundCompetition:
+            if competitionDateFilter(foundCompetition[0]["date"]):
+                # if foundClub and foundCompetition:
                 return render_template(
-                    "booking.html", club=foundClub, competition=foundCompetition
-                )
+                        "booking.html", club=foundClub[0], competition=foundCompetition[0]
+                    )
+                
             else:
-                flash("Something went wrong-please try again")
-                return render_template(
-                    "welcome.html", club=club, competitions=competitions_list
-                )
+                return "You cannot book places from a past competition"
         else:
-            return "You cannot book places from a past competition"
+                    flash("Something went wrong-please try again")
+                    return render_template(
+                        "welcome.html", club=club, competitions=competitions_list
+                    )
 
     @app.route("/purchasePlaces", methods=["POST"])
     def purchasePlaces():

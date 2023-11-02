@@ -1,6 +1,6 @@
 import pytest
 from .conftest import client
-from server import loadClubs, loadCompetitions, saveClubs, saveCompetitions
+from server import loadClubs, loadCompetitions
 
 
 def test_index(client):
@@ -32,7 +32,11 @@ def test_logout(client):
     assert response.status_code == 302
     # assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
-
+def test_booking_with_wrong_club_or_comp(client):
+    response_wrong_club = client.get("/book/Summer Classic/FakeClub")
+    response_wrong_comp = client.get("/book/FakeComp/Simply Lift")
+    assert b"Something went wrong-please try again" in response_wrong_club.data
+    assert b"Something went wrong-please try again" in response_wrong_comp.data
 
 ### Tests des bugs ###
 
