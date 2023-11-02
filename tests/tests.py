@@ -27,13 +27,14 @@ def test_points_display(client):
 
 
 def test_logout(client):
+    # url de redirection, donc code 302
     response = client.get("/logout")
     assert response.status_code == 302
     # assert b"Welcome to the GUDLFT Registration Portal!" in response.data
 
 
-# Tests des bugs
 
+### Tests des bugs ###
 
 # Bug 1
 def test_login_with_wrong_email(client):
@@ -103,7 +104,7 @@ def test_points_deduction(client):
 
 
 
-# Test des fonctions pour les fichiers JSON
+### Test des fonctions pour les fichiers JSON ###
 
 def test_loadClubs():
     clubs = loadClubs()
